@@ -1,0 +1,40 @@
+        # Battery Health and Component Health Actions
+        if row['Battery_Health'] < attribute_ranges['Battery_Health']['critical_low'] or row['Component_Health'] < attribute_ranges['Component_Health']['critical_low']:
+            actions.append(actions[3])  # 'Initiate Docking sequence to ISS'
+            
+        # Battery Level Actions
+        if row['Battery_Level'] < attribute_ranges['Battery_Level']['critical_low']:
+            actions.append(actions[9])  # 'Disable non-essential systems'
+            actions.append(actions[0])  # 'Reroute power to core functions'
+        elif row['Battery_Level'] < attribute_ranges['Battery_Level']['low']:
+            actions.append(actions[0])  # 'Reroute power to core functions'
+        
+        # Temperature Actions
+        if row['Temperature'] > attribute_ranges['Temperature']['critical_high']:
+            actions.append(actions[4])  # 'Increase cooling system power'
+            actions.append(actions[1])  # 'Adjust orientation for passive cooling'
+        elif row['Temperature'] > attribute_ranges['Temperature']['high']:
+            actions.append(actions[4])  # 'Increase cooling system power'
+        elif row['Temperature'] < attribute_ranges['Temperature']['critical_low']:
+            actions.append(actions[1])  # 'Adjust orientation for passive cooling'
+        
+        # Solar Panel Efficiency Actions
+        if row['Solar_Panel_Efficiency'] < attribute_ranges['Solar_Panel_Efficiency']['critical_low']:
+            actions.append(actions[8])  # 'Adjust pitch, yaw, roll for sunlight absorption'
+        
+        # Signal Strength Actions
+        if row['Signal_Strength'] < attribute_ranges['Signal_Strength']['critical_low']:
+            actions.append(actions[5])  # 'Adjust antenna position or switch frequency'
+        
+        # Data Storage Actions
+        if row['Data_Storage_Used'] > attribute_ranges['Data_Storage_Used']['critical_high']:
+            actions.append(actions[6])  # 'Optimize data transmission'
+            actions.append(actions[7])  # 'Delete unnecessary data'
+        
+        # CPU/GPU Usage Actions
+        if row['CPU_GPU_Usage'] > attribute_ranges['CPU_GPU_Usage']['critical_high']:
+            actions.append(actions[10])  # 'Redistribute workload, reduce power to affected components'
+        
+        # Debris Risk Actions
+        if row['Debris_Risk_Level'] > attribute_ranges['Debris_Risk_Level']['critical_high']:
+            actions.append(actions[2])  # 'Recalibrate position, tweak pitch, roll, yaw'
